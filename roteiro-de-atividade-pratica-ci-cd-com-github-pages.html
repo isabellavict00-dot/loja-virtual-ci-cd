@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><script src="https://myhub.ia.br/canvas-vendor/tailwind.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roteiro de Atividade Prática — CI/CD para iniciantes</title>
+
+  <style>
+    :root {
+      --azul-escuro: #17365d;
+      --azul: #2563a6;
+      --azul-claro: #eaf3fb;
+      --cinza-claro: #f3f5f7;
+      --borda: #d5dce3;
+      --texto: #263238;
+      --alerta: #fff4d6;
+      --verde-claro: #eaf6ee;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      color: var(--texto);
+      background: #f4f6f8;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 36px;
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--azul-escuro);
+      line-height: 1.3;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-size: 2rem;
+    }
+
+    h2 {
+      margin-top: 38px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--azul-claro);
+      font-size: 1.45rem;
+    }
+
+    h3 {
+      margin-top: 26px;
+      font-size: 1.1rem;
+    }
+
+    p,
+    li {
+      color: #30343b;
+    }
+
+    .subtitulo {
+      margin-top: 0;
+      color: #555;
+      font-size: 1.1rem;
+    }
+
+    .identificacao {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 18px;
+      margin: 28px 0;
+    }
+
+    .campo {
+      min-height: 32px;
+      border-bottom: 1px solid #555;
+    }
+
+    .caixa {
+      margin: 18px 0;
+      padding: 16px 18px;
+      border-left: 5px solid var(--azul);
+      border-radius: 4px;
+      background: var(--azul-claro);
+    }
+
+    .alerta {
+      border-left-color: #d49b00;
+      background: var(--alerta);
+    }
+
+    .sucesso {
+      border-left-color: #31824a;
+      background: var(--verde-claro);
+    }
+
+    .resposta {
+      min-height: 62px;
+      margin: 8px 0 18px;
+      border-bottom: 1px solid #999;
+    }
+
+    .resposta-longa {
+      min-height: 100px;
+      margin: 8px 0 22px;
+      border-bottom: 1px solid #999;
+    }
+
+    .lista-checagem {
+      padding: 16px 20px;
+      background: var(--cinza-claro);
+      border-radius: 6px;
+    }
+
+    .lista-checagem li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      padding: 2px 5px;
+      color: #132b48;
+      background: #eef1f4;
+      border-radius: 3px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    pre.codigo {
+      overflow-x: auto;
+      margin: 16px 0;
+      padding: 18px;
+      color: #f2f5f8;
+      background: #17212b;
+      border-radius: 8px;
+      line-height: 1.45;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    pre.codigo code {
+      padding: 0;
+      color: inherit;
+      background: transparent;
+      border-radius: 0;
+      font-size: 0.88rem;
+    }
+
+    .observacao-codigo {
+      color: #555;
+      font-size: 0.92rem;
+    }
+
+    table {
+      width: 100%;
+      margin: 18px 0;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border: 1px solid var(--borda);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: #fff;
+      background: var(--azul-escuro);
+    }
+
+    .rodape {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--borda);
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+
+      main {
+        padding: 22px 18px;
+      }
+
+      .identificacao {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #fff;
+      }
+
+      main {
+        max-width: none;
+        padding: 20px;
+        border: 0;
+        box-shadow: none;
+      }
+
+      pre.codigo {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <h1>Roteiro de Atividade Prática</h1>
+      <p class="subtitulo">
+        <strong>CI/CD para iniciantes:</strong> criação e publicação de uma página HTML
+      </p>
+
+      <div class="identificacao">
+        <div><strong>Nome:</strong><div class="campo"></div></div>
+        <div><strong>Turma:</strong><div class="campo"></div></div>
+        <div><strong>Data:</strong><div class="campo"></div></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. Situação-problema</h2>
+      <p>
+        A empresa fictícia DevFlow Solutions atualiza com frequência a página de
+        uma loja virtual. Para tornar a publicação mais organizada e reduzir
+        tarefas manuais, a equipe deseja armazenar os arquivos do site em um
+        repositório e automatizar sua publicação.
+      </p>
+      <p>
+        Nesta atividade, vocês criarão uma página simples em HTML usando o
+        Visual Studio Code (VS Code), guardarão o arquivo em um repositório do
+        GitHub, acompanharão um workflow do GitHub Actions e publicarão o site
+        pelo GitHub Pages.
+      </p>
+
+      <div class="caixa">
+        <strong>Adaptação para iniciantes:</strong>
+        não será necessário instalar um servidor, configurar chaves SSH ou criar
+        tokens de acesso. O GitHub Pages será usado para publicar a página.
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Objetivos de aprendizagem</h2>
+      <p>Ao final da atividade, espera-se que vocês consigam:</p>
+      <ul>
+        <li>identificar, de forma básica, as etapas de um fluxo CI/CD;</li>
+        <li>criar uma pasta de projeto e um arquivo HTML no VS Code;</li>
+        <li>criar um repositório no GitHub e enviar arquivos para ele;</li>
+        <li>registrar alterações usando commits;</li>
+        <li>acompanhar a execução de um workflow no GitHub Actions;</li>
+        <li>publicar e conferir uma página usando o GitHub Pages;</li>
+        <li>explicar os benefícios, as dificuldades e os cuidados da automação.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Conceitos essenciais</h2>
+      <ul>
+        <li><strong>HTML:</strong> linguagem usada para organizar o conteúdo de uma página web.</li>
+        <li><strong>VS Code:</strong> editor de código usado para criar e editar arquivos.</li>
+        <li><strong>Repositório:</strong> espaço on-line onde são guardados os arquivos e o histórico do projeto.</li>
+        <li><strong>Commit:</strong> registro de uma alteração feita no projeto.</li>
+        <li><strong>Push:</strong> envio das alterações para um repositório remoto, como o GitHub.</li>
+        <li><strong>Workflow:</strong> conjunto de instruções executadas automaticamente pelo GitHub Actions.</li>
+        <li><strong>CI — Integração Contínua:</strong> prática de executar verificações automatizadas quando o projeto muda.</li>
+        <li><strong>CD — Entrega ou implantação contínua:</strong> prática de preparar ou publicar alterações de forma automatizada.</li>
+        <li><strong>GitHub Pages:</strong> serviço do GitHub que publica sites estáticos, como páginas feitas com HTML e CSS.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Materiais necessários</h2>
+      <ul>
+        <li>computador com acesso à internet;</li>
+        <li>navegador de internet;</li>
+        <li>Visual Studio Code instalado, ou outro editor indicado pelo professor;</li>
+        <li>conta no GitHub;</li>
+        <li>arquivo de exemplo desta atividade;</li>
+        <li>apoio do professor para revisar as etapas.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. Tarefa</h2>
+      <p>
+        Em grupo, criem uma página inicial simples para uma loja virtual fictícia.
+        A página deverá conter:
+      </p>
+      <ol>
+        <li>nome da loja;</li>
+        <li>breve descrição da loja;</li>
+        <li>pelo menos três produtos;</li>
+        <li>preço de cada produto;</li>
+        <li>uma forma de contato fictícia.</li>
+      </ol>
+      <p>
+        O arquivo principal deverá se chamar <code>index.html</code>. Ele será
+        armazenado em um repositório do GitHub e publicado usando o GitHub Pages.
+      </p>
+
+      <div class="caixa alerta">
+        <strong>Privacidade:</strong> não incluam senhas, endereços, telefones,
+        e-mails pessoais ou outras informações reais. Usem somente dados fictícios.
+      </div>
+    </section>
+
+    <section>
+      <h2>6. Procedimento</h2>
+
+      <h3>Etapa 1 — Criar a pasta do projeto no VS Code</h3>
+      <ol>
+        <li>Crie no computador uma pasta para guardar os arquivos da atividade.</li>
+        <li>Dê à pasta um nome simples, por exemplo, <code>loja-virtual</code>.</li>
+        <li>Abra o VS Code.</li>
+        <li>No menu do VS Code, escolha <strong>File &gt; Open Folder</strong> (ou <strong>Arquivo &gt; Abrir Pasta</strong>).</li>
+        <li>Selecione a pasta <code>loja-virtual</code> que acabou de criar.</li>
+        <li>No painel de arquivos do VS Code, crie um arquivo chamado exatamente <code>index.html</code>.</li>
+      </ol>
+
+      <div class="caixa">
+        <strong>Atenção:</strong> confirme que o nome é <code>index.html</code>,
+        com letras minúsculas. Evite nomes como <code>Index.html</code>,
+        <code>inicio.html</code> ou <code>index.html.txt</code>.
+      </div>
+
+      <h3>Etapa 2 — Inserir o exemplo no arquivo</h3>
+      <ol>
+        <li>Localize o exemplo de código apresentado mais adiante neste roteiro.</li>
+        <li>Copie o código do exemplo, desde <code>&lt;!DOCTYPE html&gt;</code> até <code>&lt;/html&gt;</code>.</li>
+        <li>Cole o conteúdo no arquivo <code>index.html</code> aberto no VS Code.</li>
+        <li>Salve o arquivo usando <strong>Ctrl + S</strong> (Windows/Linux) ou <strong>Command + S</strong> (macOS).</li>
+        <li>Personalize o nome da loja, a descrição, os produtos, os preços e o contato fictício.</li>
+        <li>Não apague as marcações HTML, como <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code> e <code>&lt;article&gt;</code>, sem compreender sua função.</li>
+      </ol>
+
+      <h3>Exemplo de página HTML para editar no VS Code</h3>
+      <p class="observacao-codigo">
+        O conteúdo abaixo é um exemplo de código. Copiem o texto do bloco para
+        o arquivo <code>index.html</code> e alterem os textos conforme a tarefa.
+      </p>
+
+      <pre class="codigo"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Vitrine Criativa&lt;/title&gt;
+
+  &lt;style&gt;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #263238;
+      background-color: #f4f7f8;
+    }
+
+    header {
+      padding: 32px 20px;
+      text-align: center;
+      color: white;
+      background-color: #245c63;
+    }
+
+    main {
+      width: min(100% - 32px, 900px);
+      margin: 30px auto;
+    }
+
+    .descricao {
+      margin-bottom: 28px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+    }
+
+    .produto {
+      padding: 20px;
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 2px 8px #00000015;
+    }
+
+    .produto h3 {
+      color: #245c63;
+    }
+
+    .preco {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .contato {
+      margin-top: 28px;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      background-color: #e2eeee;
+    }
+
+    footer {
+      padding: 16px;
+      text-align: center;
+      color: white;
+      background-color: #263238;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Vitrine Criativa&lt;/h1&gt;
+    &lt;p&gt;Produtos especiais para deixar o dia a dia mais colorido.&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section class="descricao"&gt;
+      &lt;h2&gt;Bem-vindos à nossa loja&lt;/h2&gt;
+      &lt;p&gt;
+        A Vitrine Criativa é uma loja fictícia de produtos criativos,
+        úteis e feitos para inspirar novas ideias.
+      &lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section&gt;
+      &lt;h2&gt;Nossos produtos&lt;/h2&gt;
+
+      &lt;div class="produtos"&gt;
+        &lt;article class="produto"&gt;
+          &lt;h3&gt;Caderno Colorido&lt;/h3&gt;
+          &lt;p&gt;Caderno para anotações, estudos e desenhos.&lt;/p&gt;
+          &lt;p class="preco"&gt;R$ 24,90&lt;/p&gt;
+        &lt;/article&gt;
+
+        &lt;article class="produto"&gt;
+          &lt;h3&gt;Caneca Criativa&lt;/h3&gt;
+          &lt;p&gt;Caneca fictícia com uma estampa divertida.&lt;/p&gt;
+          &lt;p class="preco"&gt;R$ 32,00&lt;/p&gt;
+        &lt;/article&gt;
+
+        &lt;article class="produto"&gt;
+          &lt;h3&gt;Ecobag Urbana&lt;/h3&gt;
+          &lt;p&gt;Bolsa reutilizável para carregar pequenos objetos.&lt;/p&gt;
+          &lt;p class="preco"&gt;R$ 39,90&lt;/p&gt;
+        &lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class="contato"&gt;
+      &lt;h2&gt;Fale com a loja&lt;/h2&gt;
+      &lt;p&gt;E-mail fictício: contato@vitrinecriativa.example&lt;/p&gt;
+      &lt;p&gt;Este contato é apenas ilustrativo.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;Loja fictícia criada para uma atividade escolar.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      <h3>Etapa 3 — Conferir a página no computador</h3>
+      <ol>
+        <li>Salvem o arquivo <code>index.html</code> no VS Code.</li>
+        <li>Localizem o arquivo na pasta do projeto usando o Explorador de Arquivos ou o Finder.</li>
+        <li>Cliquem duas vezes no arquivo para abri-lo no navegador.</li>
+        <li>Confiram se o nome da loja, a descrição, os três produtos, os preços e o contato estão corretos.</li>
+        <li>Se fizerem alterações no VS Code, salvem o arquivo e atualizem a página no navegador.</li>
+      </ol>
+
+      <p>O que vocês alteraram no exemplo?</p>
+      <div class="resposta"></div>
+
+      <p>O que aconteceu no navegador depois que vocês abriram o arquivo?</p>
+      <div class="resposta"></div>
+
+      <h3>Etapa 4 — Criar o repositório no GitHub</h3>
+      <ol>
+        <li>Acessem o GitHub e entrem na conta.</li>
+        <li>Escolham a opção para criar um novo repositório.</li>
+        <li>Definam um nome simples, por exemplo, <code>loja-virtual-ci-cd</code>.</li>
+        <li>Se o professor orientar, iniciem o repositório com um arquivo README.</li>
+        <li>Escolham a visibilidade indicada pelo professor e criem o repositório.</li>
+        <li>Deixem aberta a página do repositório para a próxima etapa.</li>
+      </ol>
+
+      <p>Nome escolhido para o repositório:</p>
+      <div class="resposta"></div>
+
+      <p>Para que vocês acham que serve um arquivo README?</p>
+      <div class="resposta-longa"></div>
+
+      <h3>Etapa 5 — Enviar o arquivo HTML para o GitHub</h3>
+      <p>
+        O objetivo desta etapa é guardar no repositório a página HTML criada no
+        VS Code. O professor poderá orientar o envio pelo site do GitHub ou pelo
+        controle de versão do VS Code.
+      </p>
+      <ol>
+        <li>Na página do repositório, procurem a opção para adicionar ou enviar arquivos.</li>
+        <li>Selecionem o arquivo <code>index.html</code> que está na pasta do projeto.</li>
+        <li>Confiram se o arquivo aparece na lista antes de confirmar o envio.</li>
+        <li>Escrevam uma mensagem clara para registrar a alteração, como <em>Adiciona a página inicial da loja</em>.</li>
+        <li>Confirmem a gravação da alteração no repositório. Esse registro é um commit.</li>
+        <li>Voltem à página principal do repositório e confirmem que o arquivo <code>index.html</code> está visível.</li>
+      </ol>
+
+      <div class="caixa">
+        <strong>Se estiverem usando o VS Code:</strong> o professor poderá orientar
+        a conexão do VS Code ao GitHub. Não compartilhem senhas nem tokens no
+        código ou em mensagens. Se a conexão pedir autenticação, sigam somente
+        as instruções oficiais apresentadas pelo GitHub e pelo professor.
+      </div>
+
+      <p>Como vocês confirmaram que o arquivo foi enviado ao repositório?</p>
+      <div class="resposta"></div>
+
+      <h3>Etapa 6 — Configurar a publicação pelo GitHub Pages</h3>
+      <ol>
+        <li>No repositório, abram <strong>Settings</strong>.</li>
+        <li>Procurem a seção <strong>Pages</strong>.</li>
+        <li>Na área de configuração de build e publicação, escolham <strong>GitHub Actions</strong> como origem, se essa opção estiver disponível.</li>
+        <li>Procurem uma sugestão de workflow para site estático. O nome pode ser semelhante a <strong>Static HTML</strong> ou <strong>Deploy static content to Pages</strong>.</li>
+        <li>Peçam ao professor para revisar a opção selecionada antes de confirmar.</li>
+        <li>Se o GitHub solicitar a criação ou confirmação de um arquivo de workflow, sigam a orientação do professor.</li>
+        <li>Verifiquem se o workflow aparece na pasta <code>.github/workflows/</code> do repositório.</li>
+      </ol>
+
+      <div class="caixa">
+        <strong>O que é o workflow?</strong>
+        É um arquivo de instruções que informa ao GitHub quais tarefas executar
+        automaticamente. Nesta atividade, o workflow será usado para publicar o
+        conteúdo do site. Se os nomes das opções estiverem diferentes, peçam
+        ajuda ao professor.
+      </div>
+
+      <p>Qual opção de publicação vocês escolheram?</p>
+      <div class="resposta"></div>
+
+      <p>Em que pasta ficou o arquivo do workflow?</p>
+      <div class="resposta"></div>
+
+      <h3>Etapa 7 — Acompanhar a execução do workflow</h3>
+      <ol>
+        <li>Façam uma alteração pequena no arquivo <code>index.html</code>, como corrigir uma frase ou mudar a descrição de um produto.</li>
+        <li>Salvem o arquivo e enviem a nova versão ao repositório, registrando a alteração.</li>
+        <li>Abriam a aba <strong>Actions</strong> do repositório.</li>
+        <li>Localizem a execução iniciada depois da alteração.</li>
+        <li>Aguardem a conclusão e observem o resultado indicado.</li>
+        <li>Se houver uma falha, abram a execução para identificar qual etapa apresentou o erro e peçam orientação ao professor.</li>
+      </ol>
+
+      <div class="lista-checagem">
+        <strong>Como interpretar o resultado:</strong>
+        <ul>
+          <li><strong>Em andamento:</strong> o workflow ainda está sendo executado.</li>
+          <li><strong>Sucesso:</strong> as etapas terminaram sem indicar erro.</li>
+          <li><strong>Falha:</strong> uma ou mais etapas encontraram um problema.</li>
+        </ul>
+      </div>
+
+      <p>Que alteração iniciou a execução do workflow?</p>
+      <div class="resposta"></div>
+
+      <p>Qual resultado apareceu na aba Actions?</p>
+      <div class="resposta"></div>
+
+      <p>Se houve falha, que etapa apresentou o erro? O que vocês fizeram em seguida?</p>
+      <div class="resposta-longa"></div>
+
+      <h3>Etapa 8 — Conferir a página HTML publicada</h3>
+      <p>
+        Nesta etapa, vocês vão acessar no navegador a página HTML criada em
+        <code>index.html</code> e verificar se ela foi publicada corretamente.
+      </p>
+      <ol>
+        <li>Voltem à área <strong>Settings &gt; Pages</strong> do repositório.</li>
+        <li>Localizem o endereço do site disponibilizado pelo GitHub Pages.</li>
+        <li>Cliquem no endereço ou copiem-no e abram em uma nova aba do navegador.</li>
+        <li>Confiram se a página mostra o nome da loja, a descrição, os produtos e os preços.</li>
+        <li>Comparem o conteúdo exibido no navegador com o arquivo <code>index.html</code> do repositório.</li>
+        <li>Se o site ainda não estiver disponível, aguardem alguns minutos e verifiquem novamente a aba <strong>Actions</strong>.</li>
+      </ol>
+
+      <div class="caixa sucesso">
+        <strong>Lista de conferência da página publicada:</strong>
+        <ul>
+          <li>o nome da loja aparece corretamente;</li>
+          <li>a descrição está visível;</li>
+          <li>há pelo menos três produtos;</li>
+          <li>cada produto tem um preço;</li>
+          <li>o contato é fictício;</li>
+          <li>não há dados pessoais reais;</li>
+          <li>a página publicada corresponde ao arquivo <code>index.html</code>.</li>
+        </ul>
+      </div>
+
+      <p>Endereço da página publicada:</p>
+      <div class="resposta"></div>
+
+      <p>A página apareceu corretamente no navegador? Expliquem o que verificaram.</p>
+      <div class="resposta-longa"></div>
+
+      <h3>Etapa 9 — Testar uma nova atualização</h3>
+      <ol>
+        <li>Alterem outro texto ou produto no arquivo <code>index.html</code>.</li>
+        <li>Salvem o arquivo e enviem a alteração para o repositório.</li>
+        <li>Confirmem que uma nova execução aparece na aba <strong>Actions</strong>.</li>
+        <li>Aguardem a conclusão do workflow.</li>
+        <li>Atualizem a página publicada no navegador.</li>
+        <li>Verifiquem se a alteração aparece no site.</li>
+      </ol>
+
+      <p>A alteração foi publicada? Como vocês confirmaram?</p>
+      <div class="resposta-longa"></div>
+    </section>
+
+    <section>
+      <h2>7. Entrega</h2>
+      <p>Cada grupo deverá apresentar:</p>
+      <ul>
+        <li>nome do repositório;</li>
+        <li>endereço do repositório no GitHub;</li>
+        <li>endereço da página publicada;</li>
+        <li>breve descrição da loja criada;</li>
+        <li>evidência da execução concluída do workflow, conforme orientação do professor;</li>
+        <li>respostas às perguntas dissertativas.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>8. Perguntas dissertativas</h2>
+      <p>
+        Respondam com frases completas. Expliquem suas ideias e, sempre que
+        possível, usem exemplos observados durante a atividade.
+      </p>
+
+      <ol>
+        <li>
+          Descrevam o caminho percorrido por uma alteração desde que vocês
+          editaram o arquivo no VS Code até a mudança aparecer na página
+          publicada.
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Qual etapa foi mais difícil para o grupo? Expliquem o que causou a
+          dificuldade e como tentaram resolvê-la.
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          O que o GitHub Actions fez automaticamente depois que vocês enviaram
+          uma alteração ao repositório?
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Qual é a diferença entre salvar o arquivo no VS Code e enviar a
+          alteração ao repositório do GitHub?
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Por que é importante verificar se o workflow terminou com sucesso
+          antes de considerar a página atualizada?
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Como a automação pode ajudar uma equipe que atualiza um site com
+          frequência? Apresentem pelo menos dois benefícios.
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Que problemas poderiam ocorrer se uma equipe publicasse alterações
+          sem revisar ou testar a página?
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Por que o arquivo principal desta atividade deve se chamar
+          <code>index.html</code>?
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Se o workflow apresentasse uma falha, que informações vocês
+          verificariam para tentar entender o problema?
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Por que não devemos colocar senhas, chaves de acesso ou dados pessoais
+          em arquivos de um repositório?
+          <div class="resposta-longa"></div>
+        </li>
+        <li>
+          Se a página fosse usada por uma loja real, que verificações vocês
+          acrescentariam antes de publicar uma atualização? Justifiquem suas
+          escolhas.
+          <div class="resposta-longa"></div>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>9. Critérios de avaliação</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th>O que será observado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Organização do projeto</td>
+            <td>O grupo criou a pasta e salvou o arquivo principal com o nome correto.</td>
+          </tr>
+          <tr>
+            <td>Página HTML</td>
+            <td>A página apresenta a loja, uma descrição, pelo menos três produtos, preços e contato fictício.</td>
+          </tr>
+          <tr>
+            <td>Repositório</td>
+            <td>O grupo enviou o arquivo ao repositório e registrou as alterações.</td>
+          </tr>
+          <tr>
+            <td>Workflow</td>
+            <td>O grupo localizou e acompanhou a execução no GitHub Actions.</td>
+          </tr>
+          <tr>
+            <td>Publicação</td>
+            <td>O grupo acessou e verificou a página publicada pelo GitHub Pages.</td>
+          </tr>
+          <tr>
+            <td>Privacidade</td>
+            <td>O grupo usou somente informações fictícias e não expôs dados pessoais.</td>
+          </tr>
+          <tr>
+            <td>Respostas dissertativas</td>
+            <td>As respostas são completas, claras e justificadas.</td>
+          </tr>
+          <tr>
+            <td>Colaboração</td>
+            <td>Os integrantes participaram das etapas e da apresentação.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>10. Conclusão do grupo</h2>
+      <p>Com suas palavras, expliquem:</p>
+      <ul>
+        <li>o que foi automatizado nesta atividade;</li>
+        <li>qual foi o principal aprendizado do grupo;</li>
+        <li>que melhoria vocês fariam no projeto se tivessem mais tempo.</li>
+      </ul>
+
+      <p><strong>Conclusão:</strong></p>
+      <div class="resposta-longa"></div>
+      <div class="resposta-longa"></div>
+    </section>
+
+    <footer class="rodape">
+      <p>Atividade prática de introdução a HTML, GitHub Actions e GitHub Pages.</p>
+    </footer>
+  </main>
+</body>
+</html>
